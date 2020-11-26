@@ -84,6 +84,7 @@ class SignUpActivity : AppCompatActivity() {
                 progressDialog.setTitle("signUp")
                 progressDialog.setMessage("Please wait....")
                 progressDialog.setCanceledOnTouchOutside(false)
+                progressDialog.show()
 
 
                 mAuth = FirebaseAuth.getInstance()
@@ -115,8 +116,8 @@ class SignUpActivity : AppCompatActivity() {
         val userMap = HashMap<String, Any>()
 
         userMap["uid"] = currentUserId
-        userMap["fullName"] = fullName
-        userMap["userName"] = username
+        userMap["fullName"] = fullName.toLowerCase()
+        userMap["userName"] = username.toLowerCase()
         userMap["email"] = email
         userMap["bio"] = "Hey"
         userMap["image"]=""

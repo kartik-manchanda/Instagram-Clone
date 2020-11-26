@@ -191,7 +191,7 @@
 
 
                 <TextView
-                    android:id="@+id/fill_name_profile_frag"
+                    android:id="@+id/full_name_profile_frag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Full Name"
@@ -200,6 +200,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/bio_profile_frag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bio"
