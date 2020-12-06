@@ -120,12 +120,22 @@ class SignUpActivity : AppCompatActivity() {
         userMap["userName"] = username.toLowerCase()
         userMap["email"] = email
         userMap["bio"] = "Hey"
-        userMap["image"]=""
+        userMap["image"]="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Gnome-stock_person.svg/1024px-Gnome-stock_person.svg.png"
             usersRef.child(currentUserId).setValue(userMap)
                 .addOnCompleteListener {task->
                     if(task.isSuccessful){
                         progressDialog.dismiss()
                         Toast.makeText(this, "Account has been created Successfully", Toast.LENGTH_SHORT).show()
+
+
+                        FirebaseDatabase.getInstance().reference
+                                .child("Follow").child(currentUserId)
+                                .child("Following").child(currentUserId)
+                                .setValue(true)
+
+
+
+
                         val intent=Intent(this@SignUpActivity,MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)

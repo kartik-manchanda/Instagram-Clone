@@ -1,6 +1,7 @@
 package com.example.instagramcloneappkotlin.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.instagramcloneappkotlin.MainActivity
 import com.example.instagramcloneappkotlin.R
 import com.example.instagramcloneappkotlin.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -53,12 +55,19 @@ class UserAdapter(
         checkFollowingStatus(user.getUID(), holder.followButton)
 
         holder.itemView.setOnClickListener {
-            val pref=mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
-            pref.putString("profileId",user.getUID())
-            pref.apply()
+           if(isFragment){
+               val pref=mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+               pref.putString("profileId",user.getUID())
+               pref.apply()
 
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container,ProfileFragment()).commit()
+               (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                   .replace(R.id.fragment_container,ProfileFragment()).commit()
+           }
+            else{
+               val intent=Intent(mContext,MainActivity::class.java)
+               intent.putExtra("publisherId",user.getUID())
+               mContext.startActivity(intent)
+           }
         }
 
         holder.followButton.setOnClickListener {
@@ -85,6 +94,7 @@ class UserAdapter(
                         }
 
                 }
+                addNotification(user.getUID())
             } else {
 
                 firebaseUser?.uid.let { it1 ->
@@ -155,6 +165,24 @@ class UserAdapter(
             }
 
         })
+
+    }
+
+    private fun addNotification(userId:String){
+
+        val notiRef=FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child(userId)
+
+        val notiMap=HashMap<String,Any>()
+
+        notiMap["userId"]=firebaseUser!!.uid
+        notiMap["text"]="started following you"
+        notiMap["postId"]=""
+        notiMap["isPost"]=false
+
+        notiRef.push().setValue(notiMap)
+
 
     }
 }

@@ -46,7 +46,7 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +54,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -110,6 +110,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/followers_ll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -138,6 +139,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/followings_ll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -185,7 +187,7 @@
             <LinearLayout
                 android:id="@+id/mid_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="84dp"
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -196,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:text="Full Name"
                     android:textColor="@color/black"
-                    android:textSize="12dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -205,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:text="Bio"
                     android:textColor="@color/black"
-                    android:textSize="12dp" />
+                    android:textSize="16dp" />
 
 
             </LinearLayout>
@@ -240,9 +242,21 @@
 
 
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_grid_view_saved_images"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

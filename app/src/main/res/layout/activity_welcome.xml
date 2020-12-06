@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:scaleType="centerCrop"
+       android:src="@drawable/welcome" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1.8"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="50dp"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:textStyle="italic"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Explore,make friends,share!!"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:textStyle="italic"
+            android:textColor="@android:color/black"/>
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btn_welcome_login"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:text="Login"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/welcome_login_background"/>
+
+
+    <Button
+        android:id="@+id/btn_welcome_register"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:text="Create new account"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/edit_profile_background"/>
+
+
+
+
+
+
+</LinearLayout>
+

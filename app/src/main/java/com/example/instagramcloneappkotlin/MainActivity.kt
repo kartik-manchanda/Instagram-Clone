@@ -1,5 +1,6 @@
 package com.example.instagramcloneappkotlin
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_add -> {
 
-//                item.isChecked = false
-//                startActivity(Intent(this@MainActivity, AddPostActivity::class.java))
+                item.isChecked = false
+                startActivity(Intent(this@MainActivity, AddPostActivity::class.java))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notification -> {

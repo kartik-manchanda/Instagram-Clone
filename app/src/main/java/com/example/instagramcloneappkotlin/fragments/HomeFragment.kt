@@ -5,56 +5,229 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.instagramcloneappkotlin.R
+import com.example.instagramcloneappkotlin.adapter.PostAdapter
+import com.example.instagramcloneappkotlin.adapter.StoryAdapter
+import com.example.instagramcloneappkotlin.model.Post
+import com.example.instagramcloneappkotlin.model.Story
+import com.example.instagramcloneappkotlin.model.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var recycler_view_home: RecyclerView
+    lateinit var recycler_view_story: RecyclerView
+    lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var linearLayoutManager2: LinearLayoutManager
+
+    private var postAdapter: PostAdapter? = null
+    private var postList: MutableList<Post>? = null
+    private var followingList: MutableList<String>? = null
+
+    private var storyAdapter: StoryAdapter? = null
+    private var storyList:MutableList<Story>?=null
+
+    lateinit var homeProfileImage:CircleImageView
+    lateinit var homeUserInfo:TextView
+    lateinit var search_home:CardView
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        homeProfileImage=view.findViewById(R.id.homeProfileImage)
+        homeUserInfo=view.findViewById(R.id.homeUserInfo)
+        search_home=view.findViewById(R.id.search_home)
+
+
+
+        recycler_view_home = view.findViewById(R.id.recycler_view_home)
+        linearLayoutManager = LinearLayoutManager(context)
+
+        recycler_view_story = view.findViewById(R.id.recycler_view_story)
+        linearLayoutManager2 = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+
+        postList = ArrayList()
+        postAdapter = context?.let { PostAdapter(it, postList as ArrayList<Post>) }
+        recycler_view_home.adapter = postAdapter
+
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        recycler_view_home.layoutManager = linearLayoutManager
+        recycler_view_home.setHasFixedSize(true)
+
+
+        recycler_view_story.layoutManager = linearLayoutManager2
+
+        storyList = ArrayList()
+        storyAdapter = context?.let { StoryAdapter(it, storyList as ArrayList<Story>) }
+        recycler_view_story.adapter = storyAdapter
+
+        search_home.setOnClickListener {
+            (context as FragmentActivity).supportFragmentManager
+                    .beginTransaction().replace(R.id.fragment_container, SearchFragment())
+                    .commit()
+        }
+
+
+        checkFollowings()
+
+        userInfo()
+
+
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun checkFollowings() {
+        followingList = ArrayList()
+
+        val followingRef = FirebaseDatabase.getInstance().reference
+                .child("Follow").child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child("Following")
+
+        followingRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                    (followingList as ArrayList<String>).clear()
+
+                    for (snapShot in dataSnapshot.children) {
+
+                        snapShot.key?.let { (followingList as ArrayList<String>).add(it) }
+                    }
+
+                    retrievePosts()
+                    retrieveStories()
+
+
+                }
+
+            }
+        })
+
+
+    }
+
+    private fun userInfo(){
+        val userRef=FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(FirebaseAuth.getInstance().currentUser!!.uid)
+
+        userRef.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+
+
+                if(snapshot.exists()){
+                    val user=snapshot.getValue<User>(User::class.java)
+
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
+                            .into(homeProfileImage)
+
+                    homeUserInfo.text=user.getfullname()
+
                 }
             }
+
+        })
+    }
+
+    private fun retrievePosts() {
+
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
+
+        postRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                postList?.clear()
+
+                for (snapShot in dataSnapshot.children) {
+                    val post = snapShot.getValue(Post::class.java)
+
+                    for (userID in (followingList as ArrayList<String>)) {
+                        if (post!!.getPublisher() == userID ) {
+
+                            postList!!.add(post)
+
+
+                        }
+
+                        postAdapter!!.notifyDataSetChanged()
+                    }
+                }
+            }
+
+        })
+
+    }
+
+    private fun retrieveStories(){
+
+        val storyRef=FirebaseDatabase.getInstance().reference
+                .child("Story")
+
+        storyRef.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+               val timeCurrent=System.currentTimeMillis()
+
+                (storyList as ArrayList<Story>).clear()
+                (storyList as ArrayList<Story>).add(Story("",0,0,"",FirebaseAuth.getInstance().currentUser!!.uid))
+
+                for(id in followingList!!){
+                    var countStory=0
+                    var story:Story?=null
+
+                    for(snapshot in dataSnapshot.child(id).children){
+                        story=snapshot.getValue(Story::class.java)
+
+                        if(timeCurrent>story!!.getTimeStart() && timeCurrent<story.getTimeEnd()){
+                            countStory++
+                        }
+
+                    }
+                    if(countStory>0){
+                        (storyList as ArrayList<Story>).add(story!!)
+
+                    }
+                }
+                storyAdapter!!.notifyDataSetChanged()
+            }
+
+        })
     }
 }
+
