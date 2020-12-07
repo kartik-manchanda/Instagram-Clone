@@ -20,15 +20,16 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home -> {
 
                 moveToFragment(HomeFragment())
+                item.setIcon(R.drawable.ic_home_nav_filled)
                 return@OnNavigationItemSelectedListener true
 
             }
-            R.id.navigation_search -> {
-
-                moveToFragment(SearchFragment())
-                return@OnNavigationItemSelectedListener true
-
-            }
+//            R.id.navigation_search -> {
+//
+//                moveToFragment(SearchFragment())
+//                return@OnNavigationItemSelectedListener true
+//
+//            }
             R.id.navigation_add -> {
 
                 item.isChecked = false
@@ -41,12 +42,12 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
 
             }
-            R.id.navigation_profile -> {
-
-                moveToFragment(ProfileFragment())
-                return@OnNavigationItemSelectedListener true
-
-            }
+//            R.id.navigation_profile -> {
+//
+//                moveToFragment(ProfileFragment())
+//                return@OnNavigationItemSelectedListener true
+//
+//            }
         }
 
 

@@ -33,7 +33,7 @@
                     android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/close"/>
+                    android:src="@drawable/cross_edit_profile"/>
 
 
                 <ImageView
@@ -42,7 +42,7 @@
                     android:layout_height="30dp"
                     android:layout_marginRight="15dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/save_edited_info"/>
+                    android:src="@drawable/ic_save_edited_info"/>
 
             </RelativeLayout>
 
@@ -54,7 +54,9 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="15dp"
+        app:civ_border_color="@color/colorPrimary"
         android:layout_centerHorizontal="true"
+        app:civ_border_width="2dp"
         android:src="@drawable/profile"
         android:layout_below="@id/app_bar_layout_profile"
         />
@@ -67,8 +69,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:textStyle="bold"
+        android:padding="20dp"
         android:textSize="16dp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorAccent"
         android:layout_below="@id/profile_image_view_profile_frag"/>
 
     <EditText
@@ -76,10 +79,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/change_image_text_btn"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
+       android:background="@drawable/edit_profile_edit_text_back"
+        android:padding="20dp"
+        android:layout_marginStart="50dp"
+
+        android:layout_marginEnd="50dp"
         android:inputType="text"
+        android:layout_marginTop="20dp"
         android:hint="Name"/>
 
 
@@ -88,9 +94,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/full_name_profile_frag"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_profile_edit_text_back"
+        android:padding="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp"
         android:inputType="text"
         android:hint="UserName"/>
 
@@ -100,9 +108,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_name_profile_frag"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_profile_edit_text_back"
+        android:padding="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp"
         android:inputType="text"
         android:hint="Bio"/>
 
@@ -111,24 +121,28 @@
         android:id="@+id/logout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/delete_account_btn"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+       android:layout_alignParentBottom="true"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
         android:text="Logout"
+        android:background="@drawable/edit_profile_background"
+        android:textColor="@color/white"
         android:textAllCaps="false"
+        android:padding="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/delete_account_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="6dp"
-        android:textAllCaps="false"
-        android:text="Delete Account"
-        android:textSize="16dp"
-        android:layout_alignParentBottom="true" />
+<!--    <Button-->
+<!--        android:id="@+id/delete_account_btn"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginBottom="6dp"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:text="Delete Account"-->
+<!--        android:textSize="16dp"-->
+<!--        android:layout_alignParentBottom="true" />-->
 
 </RelativeLayout>

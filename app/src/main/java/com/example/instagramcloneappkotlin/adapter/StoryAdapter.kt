@@ -45,7 +45,7 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
 
             //AddStoryItem
             story_plus_btn=itemView.findViewById(R.id.story_add)
-//            add_story_text=itemView.findViewById(R.id.add_story_text )
+            add_story_text=itemView.findViewById(R.id.add_story_text )
 
         }
     }

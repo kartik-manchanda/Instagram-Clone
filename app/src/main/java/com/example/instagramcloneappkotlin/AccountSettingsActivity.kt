@@ -66,6 +66,10 @@ class AccountSettingsActivity : AppCompatActivity() {
         save_info_profile_btn=findViewById(R.id.save_info_profile_btn)
         close_profile_btn=findViewById(R.id.close_profile_btn)
 
+        close_profile_btn.setOnClickListener {
+           finish()
+        }
+
 
 
 

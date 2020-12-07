@@ -327,10 +327,10 @@ class PostAdapter(private val mContext: Context,
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if(dataSnapshot.child(postId).exists()){
-                    imageView.setImageResource(R.drawable.save_large_icon)
+                    imageView.setImageResource(R.drawable.ic_bookmark_post_filled)
                     imageView.tag="Saved"
                 }else{
-                    imageView.setImageResource(R.drawable.save_unfilled_large_icon)
+                    imageView.setImageResource(R.drawable.ic_bookmark_post)
                     imageView.tag="Save"
                 }
 
