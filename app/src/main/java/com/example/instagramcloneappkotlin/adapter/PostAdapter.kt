@@ -99,7 +99,7 @@ class PostAdapter(private val mContext: Context,
             editor.putString("postId",post.getPostId()).apply()
 
             (mContext as FragmentActivity).supportFragmentManager
-                .beginTransaction().replace(R.id.fragment_container, PostDetailsFragment())
+                .beginTransaction().addToBackStack("HomeFragment").replace(R.id.fragment_container, PostDetailsFragment())
                 .commit()
 
         }
@@ -111,7 +111,7 @@ class PostAdapter(private val mContext: Context,
             editor.putString("profileId",post.getPublisher()).apply()
 
             (mContext as FragmentActivity).supportFragmentManager
-                .beginTransaction().replace(R.id.fragment_container, ProfileFragment())
+                .beginTransaction().addToBackStack("HomeFragment").replace(R.id.fragment_container, ProfileFragment())
                 .commit()
 
 
@@ -124,13 +124,20 @@ class PostAdapter(private val mContext: Context,
             editor.putString("profileId",post.getPublisher()).apply()
 
             (mContext as FragmentActivity).supportFragmentManager
-                .beginTransaction().replace(R.id.fragment_container, ProfileFragment())
+                .beginTransaction().addToBackStack("HomeFragment").replace(R.id.fragment_container, ProfileFragment())
                 .commit()
 
 
         }
 
-        holder.postImage.setOnClickListener {
+        holder.userName.setOnClickListener {
+
+            val editor=mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit()
+            editor.putString("profileId",post.getPublisher()).apply()
+
+            (mContext as FragmentActivity).supportFragmentManager
+                .beginTransaction().addToBackStack("HomeFragment").replace(R.id.fragment_container, ProfileFragment())
+                .commit()
 
         }
 

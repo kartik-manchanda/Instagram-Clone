@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
 
         search_home.setOnClickListener {
             (context as FragmentActivity).supportFragmentManager
-                    .beginTransaction().replace(R.id.fragment_container, SearchFragment())
+                    .beginTransaction().addToBackStack("HomeFragment").replace(R.id.fragment_container, SearchFragment())
                     .commit()
         }
 

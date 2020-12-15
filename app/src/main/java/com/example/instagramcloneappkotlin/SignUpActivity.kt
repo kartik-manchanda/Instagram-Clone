@@ -81,8 +81,8 @@ class SignUpActivity : AppCompatActivity() {
             else -> {
 
                  progressDialog = ProgressDialog(this@SignUpActivity)
-                progressDialog.setTitle("signUp")
-                progressDialog.setMessage("Please wait....")
+                progressDialog.setTitle("Signing Up")
+                progressDialog.setMessage("Registering you,Please wait....")
                 progressDialog.setCanceledOnTouchOutside(false)
                 progressDialog.show()
 

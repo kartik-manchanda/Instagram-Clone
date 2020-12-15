@@ -60,7 +60,7 @@ class SignInActivity : AppCompatActivity() {
             else->{
 
                 progressDialog = ProgressDialog(this@SignInActivity)
-                progressDialog.setTitle("signIn")
+                progressDialog.setTitle("signing In")
                 progressDialog.setMessage("Please wait....")
                 progressDialog.setCanceledOnTouchOutside(false)
                 progressDialog.show()

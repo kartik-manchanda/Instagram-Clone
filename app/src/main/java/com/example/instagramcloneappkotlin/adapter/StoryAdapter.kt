@@ -32,6 +32,8 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
         var story_image:CircleImageView?=null
         var story_username:TextView?=null
 
+        var story_plus_btn2:ImageView?=null
+
         //AddStoryItem
         var story_plus_btn: ImageView?=null
         var add_story_text:TextView?=null
@@ -40,12 +42,13 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
         init {
             //storyItem
             story_image_seen=itemView.findViewById(R.id.story_image_seen)
-            story_image=itemView.findViewById(R.id.story_image)
+            story_image=itemView.findViewById(R.id.story_image2)
             story_username=itemView.findViewById(R.id.story_username)
 
             //AddStoryItem
             story_plus_btn=itemView.findViewById(R.id.story_add)
             add_story_text=itemView.findViewById(R.id.add_story_text )
+            story_plus_btn2=itemView.findViewById(R.id.story_add2)
 
         }
     }
@@ -87,7 +90,7 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
         }
 
         if(holder.adapterPosition===0){
-            myStories(holder.add_story_text!!,holder.story_plus_btn!!,false)
+            myStories(holder.add_story_text!!,holder.story_plus_btn!!,holder.story_plus_btn2!!,false)
         }
 
 
@@ -95,7 +98,7 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
         holder.itemView.setOnClickListener {
             if(holder.adapterPosition===0){
 
-                myStories(holder.add_story_text!!,holder.story_plus_btn!!,true)
+                myStories(holder.add_story_text!!,holder.story_plus_btn!!,holder.story_plus_btn2!!,true)
 
             }else{
 
@@ -127,8 +130,8 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
                 if(snapshot.exists()){
                     val user=snapshot.getValue<User>(User::class.java)
 
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
-                        .into(viewHolder.story_image)
+//                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
+//                        .into(viewHolder.story_image)
 
                     if(position!=0){
                         Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
@@ -180,7 +183,7 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
 
     }
 
-    private fun myStories(textView: TextView,imageView: ImageView,click:Boolean){
+    private fun myStories(textView: TextView,imageView: ImageView,imageView2: ImageView,click:Boolean){
         val storyRef=FirebaseDatabase.getInstance().reference
             .child("Story")
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
@@ -245,9 +248,15 @@ class StoryAdapter(private val mContext:Context,private val mStory:List<Story>):
 
                     if(counter>0){
                         textView.text="My Story"
+//                        imageView.visibility=View.GONE
+                        imageView2.visibility=View.VISIBLE
                         imageView.visibility=View.GONE
+
+
                     }else{
                         textView.text="Add Story"
+//                        imageView.visibility=View.VISIBLE
+                        imageView2.visibility=View.GONE
                         imageView.visibility=View.VISIBLE
 
                     }

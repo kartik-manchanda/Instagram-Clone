@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_notification -> {
 
                 moveToFragment(NotificationFragment())
+                item.setIcon(R.drawable.notification_filled)
                 return@OnNavigationItemSelectedListener true
 
             }
@@ -72,5 +73,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentTrans=supportFragmentManager.beginTransaction()
         fragmentTrans.replace(R.id.fragment_container,fragment)
         fragmentTrans.commit()
+
     }
 }

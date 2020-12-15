@@ -3,6 +3,7 @@
 
 
     <item
+        android:enabled="true"
 
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_nav"

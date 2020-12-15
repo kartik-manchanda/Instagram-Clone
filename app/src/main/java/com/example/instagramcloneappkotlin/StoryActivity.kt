@@ -54,7 +54,7 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
 
                 val now=System.currentTimeMillis()
                 storiesProgressView!!.resume()
-                return@OnTouchListener limit<now-pressTime
+                return@OnTouchListener limit < now-pressTime
 
             }
 
@@ -105,7 +105,7 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
         reverse.setOnTouchListener(onTouchListener)
 
         val skip:View=findViewById(R.id.skip)
-        reverse.setOnClickListener {
+        skip.setOnClickListener {
             storiesProgressView!!.skip() }
         skip .setOnTouchListener(onTouchListener)
 
@@ -126,8 +126,20 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
 
             ref.removeValue().addOnCompleteListener { task ->
                 if(task.isSuccessful){
-                    Toast.makeText(this,"Deleted Successfully",Toast.LENGTH_SHORT).show()
+
+                    try {
+
+
+                        Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@StoryActivity, MainActivity::class.java)
+                        startActivity(intent)
+                    }catch (e:Exception){
+                        print("hello ${e}")
+                    }
+
+
                 }
+
             }
 
         }
@@ -247,7 +259,8 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
 
     override fun onPrev() {
 
-        if(counter-1<0) return
+        if(counter-1<0)
+            return
         Picasso.get().load(imagesList!![--counter]).placeholder(R.drawable.profile).into(image_story)
         seenNumber(storyIdsList!![counter])
 
